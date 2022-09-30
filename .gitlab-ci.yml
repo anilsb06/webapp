@@ -1,0 +1,32 @@
+stages:         
+  - build
+  - test
+  - deploy
+  - appdeploy
+
+Build-Dockerfile:      
+  stage: build
+  script:
+    - docker build . -t anilsb06/webapp
+
+Docker-Login:   
+  stage: test   
+  script:
+    - docker login -u $USERNAME -p $PASSWORD
+
+Docker-Push:     
+  stage: deploy  
+  script:
+    - docker push anilsb06/webapp
+    
+K8S_Deploy:
+  stage: appdeploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - scp -o StrictHostKeyChecking=no deployment.yml ubuntu@35.200.208.156:/home/ubuntu
+    - ssh -o StrictHostKeyChecking=no ubuntu@35.200.208.156 kubectl create -f deployment.yml
