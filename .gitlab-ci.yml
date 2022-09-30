@@ -16,7 +16,7 @@ Build-Dockerfile:
 Docker-Login:   
   stage: test   
   script:
-    - docker login -u anilsb06 -p Anil@9591096425
+    - docker login -u $USERNAME -p $PASSWORD
 
 Docker-Push:     
   stage: deploy  
