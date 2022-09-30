@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: login
-        image: anilsb06/webapp2
+        image: anilsb06/webapp
 ---
 apiVersion: v1
 kind: Service

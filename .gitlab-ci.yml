@@ -11,7 +11,7 @@ services:
 Build-Dockerfile:      
   stage: build
   script:
-    - docker build . -t anilsb06/webapp2
+    - docker build . -t anilsb06/webapp
 
 Docker-Login:   
   stage: test   
@@ -21,7 +21,7 @@ Docker-Login:
 Docker-Push:     
   stage: deploy  
   script:
-    - docker push anilsb06/webapp2
+    - docker push anilsb06/webapp
     
 K8S_Deploy:
   stage: appdeploy
